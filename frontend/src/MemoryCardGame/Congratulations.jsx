@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import { styled } from "@mui/system";
-import background from "../assets/images/celebration.gif"; // Background image
-import bgMusic from "../assets/audio/celebrate.mp3"; // Background music file
-import congratulationImage from "../assets/images/congrats2.png"; // Path to your congratulation image
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import bgMusic from "../assets/audio/celebrate.mp3";
+import background from "../assets/images/celebration.gif";
+import congratulationImage from "../assets/images/congrats2.png";
+import { useDifficulty } from "./DifficultyContext";
 
 // Styled Components
 const PixelBox = styled(Box)(({ theme }) => ({
@@ -23,7 +24,7 @@ const PixelBox = styled(Box)(({ theme }) => ({
 }));
 
 const ImageContainer = styled(Box)(() => ({
-  position: "relative", 
+  position: "relative",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -67,6 +68,7 @@ const PixelButton = styled(Box)(({ theme }) => ({
 
 const Congratulations = () => {
   const navigate = useNavigate();
+  const { difficulty } = useDifficulty();
   const audioRef = useRef(null);
   const [bgVolume, setBgVolume] = useState(
     parseInt(localStorage.getItem("bgVolume"), 10) || 0
@@ -74,23 +76,23 @@ const Congratulations = () => {
 
   // Audio setup
   useEffect(() => {
-    // Initialize audio object
     audioRef.current = new Audio(bgMusic);
     const audio = audioRef.current;
     audio.loop = true;
     audio.volume = bgVolume / 100;
 
     const handleClick = () => {
-      audio.play().catch((error) =>
-        console.error("Background music playback failed:", error)
-      );
+      audio
+        .play()
+        .catch((error) =>
+          console.error("Background music playback failed:", error)
+        );
       document.removeEventListener("click", handleClick);
     };
 
     document.addEventListener("click", handleClick);
 
     return () => {
-      // Cleanup
       audio.pause();
       audio.currentTime = 0;
       document.removeEventListener("click", handleClick);
@@ -117,7 +119,7 @@ const Congratulations = () => {
   useEffect(() => {
     const gameCompleted = localStorage.getItem("gameCompleted");
     if (!gameCompleted || gameCompleted !== "true") {
-      navigate("/Play");
+      navigate("/play");
     }
   }, [navigate]);
 
@@ -138,8 +140,8 @@ const Congratulations = () => {
           src={congratulationImage}
           alt="Congratulations"
           style={{
-            width: "100%",  // Adjust the width as you desire (e.g., 50%)
-            height: "89%", // Maintain the aspect ratio
+            width: "100%",
+            height: "89%",
           }}
         />
       </ImageContainer>

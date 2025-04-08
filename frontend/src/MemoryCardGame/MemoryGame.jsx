@@ -3,39 +3,58 @@ import { styled } from "@mui/system";
 import { animated, useSpring } from "@react-spring/web";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bgMusic from "../assets/audio/memory-bg.mp3";
 import background from "../assets/images/mode1.gif";
+import { useDifficulty } from "./DifficultyContext";
 
-const defaultDifficulty = "Hard";
-
-// Card Images
-const cardImages = [
-  { id: 1, image: "/images/earth.png" },
-  { id: 2, image: "/images/earth.png" },
-  { id: 3, image: "/images/jupiter.png" },
-  { id: 4, image: "/images/jupiter.png" },
-  { id: 5, image: "/images/mars.png" },
-  { id: 6, image: "/images/mars.png" },
-  { id: 7, image: "/images/mercury.png" },
-  { id: 8, image: "/images/mercury.png" },
-  { id: 9, image: "/images/neptune.png" },
-  { id: 10, image: "/images/neptune.png" },
-  { id: 11, image: "/images/saturn.png" },
-  { id: 12, image: "/images/saturn.png" },
-];
+// Card Images for different difficulties
+const cardImagesByDifficulty = {
+  green: [
+    { id: 1, image: "/images/meteor.png" },
+    { id: 2, image: "/images/meteor.png" },
+    { id: 3, image: "/images/comet.png" },
+    { id: 4, image: "/images/comet.png" },
+  ],
+  yellow: [
+    { id: 1, image: "/images/meteor.png" },
+    { id: 2, image: "/images/meteor.png" },
+    { id: 3, image: "/images/moon.png" },
+    { id: 4, image: "/images/moon.png" },
+    { id: 5, image: "/images/comet.png" },
+    { id: 6, image: "/images/comet.png" },
+  ],
+  red: [
+    { id: 1, image: "/images/earth.png" },
+    { id: 2, image: "/images/earth.png" },
+    { id: 3, image: "/images/jupiter.png" },
+    { id: 4, image: "/images/jupiter.png" },
+    { id: 5, image: "/images/mars.png" },
+    { id: 6, image: "/images/mars.png" },
+    { id: 7, image: "/images/mercury.png" },
+    { id: 8, image: "/images/mercury.png" },
+    { id: 9, image: "/images/neptune.png" },
+    { id: 10, image: "/images/neptune.png" },
+    { id: 11, image: "/images/saturn.png" },
+    { id: 12, image: "/images/saturn.png" },
+  ],
+};
 
 // Audio files for matching and final congratulation
-const matchAudioFiles = [
-  "/audio/wonderful.mp3",
-  "/audio/NiceJob.mp3",
-  "/audio/Greatwork.mp3",
-  "/audio/KeepItGoing.mp3",
-  "/audio/Amazing.mp3",
-];
+const matchAudioFiles = {
+  green: ["/audio/wonderful.mp3"],
+  yellow: ["/audio/wonderful.mp3", "/audio/NiceJob.mp3"],
+  red: [
+    "/audio/wonderful.mp3",
+    "/audio/NiceJob.mp3",
+    "/audio/Greatwork.mp3",
+    "/audio/KeepItGoing.mp3",
+    "/audio/Amazing.mp3",
+  ],
+};
 
-const congratsAudio = "/audio/congrats.mp3"; // Final congratulations audio
+const congratsAudio = "/audio/congrats.mp3";
 
 // Shuffle Logic
 const shuffleArray = (array) => {
@@ -46,6 +65,7 @@ const shuffleArray = (array) => {
   }
   return shuffledArray;
 };
+
 const saveGameData = async (gameData) => {
   try {
     const response = await axios.post(
@@ -55,7 +75,6 @@ const saveGameData = async (gameData) => {
         headers: { "Content-Type": "application/json" },
       }
     );
-
     console.log("Game data saved successfully", response.data);
   } catch (error) {
     console.error(
@@ -184,8 +203,6 @@ const CardFront = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  // backgroundColor: "#1b1f34",
-  // border: "2px solid #4c5c77",
   borderRadius: "8px",
   transform: "rotateY(180deg)",
   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
@@ -213,30 +230,30 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  backgroundColor: "#2c2c54", // Matching the game's background color
-  border: "2px solid #00d9ff", // Matching the pixel border
-  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)", // Subtle shadow for pixel look
+  backgroundColor: "#2c2c54",
+  border: "2px solid #00d9ff",
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
   padding: "20px",
   textAlign: "center",
-  borderRadius: "10px", // Pixel rounded corners
+  borderRadius: "10px",
 };
 
 const PixelTypography = styled(Typography)(() => ({
-  fontFamily: '"Press Start 2P", cursive', // Pixelated font style
+  fontFamily: '"Press Start 2P", cursive',
   fontSize: "24px",
-  color: "#fff", // White text to stand out on the background
+  color: "#fff",
   letterSpacing: "1px",
   textShadow: `
     -1px -1px 0 #ff0000,  
     1px -1px 0 #ff7f00, 
     1px 1px 0 #ffd700, 
-    -1px 1px 0 #ff4500`, // Pixelated text shadow
+    -1px 1px 0 #ff4500`,
 }));
 
 const PixelButtonModal = styled(Button)(() => ({
   backgroundColor: "#2c2c54",
   color: "#fff",
-  fontFamily: '"Press Start 2P", cursive', // Pixelated font style
+  fontFamily: '"Press Start 2P", cursive',
   fontSize: "14px",
   padding: "15px 30px",
   border: "2px solid #00d9ff",
@@ -294,8 +311,9 @@ Card.propTypes = {
   matched: PropTypes.bool.isRequired,
 };
 
-const MemoryCardGame = () => {
+const MemoryGame = () => {
   const navigate = useNavigate();
+  const { difficulty } = useDifficulty();
   const [cards, setCards] = useState([]);
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
@@ -303,7 +321,6 @@ const MemoryCardGame = () => {
   const [timer, setTimer] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
   const [initialReveal, setInitialReveal] = useState(true);
-  const [musicStarted, setMusicStarted] = useState(false);
   const [mouseDisabled, setMouseDisabled] = useState(false);
   const [bgVolume] = useState(
     parseInt(localStorage.getItem("bgVolume"), 10) || 0
@@ -315,68 +332,82 @@ const MemoryCardGame = () => {
   const [audioIndex, setAudioIndex] = useState(0);
   const [openModal, setOpenModal] = useState(false);
 
-  const handleSaveNewGame = () => {
-    saveGameData({
-      userID,
-      gameDate: new Date(),
-      failed: failedAttempts,
-      difficulty: defaultDifficulty,
-      completed: 0,
-      timeTaken: timer,
-    });
-  };
+  // Memoize the current difficulty cards
+  const currentDifficultyCards = useMemo(() => {
+    return cardImagesByDifficulty[difficulty] || [];
+  }, [difficulty]);
 
-  const handleNewGame = () => {
-    setCards(shuffleArray(cardImages));
+  // Memoize the handleNewGame function
+  const handleNewGame = useCallback(() => {
+    console.log("Starting new game with difficulty:", difficulty);
+    if (!currentDifficultyCards || currentDifficultyCards.length === 0) {
+      console.error("No cards found for difficulty:", difficulty);
+      return;
+    }
+
+    const newCards = [...currentDifficultyCards];
+    const shuffledCards = shuffleArray(newCards);
+
+    setCards(shuffledCards);
     setMatchedCards([]);
     setFlippedCards([]);
     setFailedAttempts(0);
     setTimer(0);
     setTimerActive(false);
     setInitialReveal(true);
-    setAudioIndex(0); // Reset audio index
+    setAudioIndex(0);
 
-    const mouseDisableDuration = 2000;
     setMouseDisabled(true);
     setTimeout(() => {
-      setMouseDisabled(false); // Re-enable mouse events after mouseDisableDuration
-    }, mouseDisableDuration);
+      setMouseDisabled(false);
+    }, 2000);
 
     setTimeout(() => {
       setInitialReveal(false);
       setTimerActive(true);
     }, 1500);
-  };
-  const handleBackButton = () => {
-    setOpenModal(true); // Show the confirmation modal
-  };
+  }, [difficulty, currentDifficultyCards]);
 
-  const handleModalYes = () => {
-    setOpenModal(false);
-    localStorage.removeItem("gameCompleted"); // Remove game completion flag
-    navigate("/play"); // Navigate to play
-  };
-
-  const handleModalNo = () => {
-    setOpenModal(false); // Close the modal and resume game
-  };
-
-  useEffect(() => {
-    handleNewGame();
-    const handleFirstClick = () => {
-      if (!musicStarted && audioRef.current) {
-        audioRef.current.volume = bgVolume / 100;
-        audioRef.current
-          .play()
-          .catch((error) => console.error("Audio play error:", error));
-        setMusicStarted(true);
+  // Memoize the handleCardClick function
+  const handleCardClick = useCallback(
+    (card) => {
+      if (
+        !matchedCards.includes(card.id) &&
+        flippedCards.length < 2 &&
+        !flippedCards.some((c) => c.id === card.id) &&
+        !mouseDisabled
+      ) {
+        setFlippedCards((prev) => [...prev, card]);
       }
-    };
-    document.addEventListener("click", handleFirstClick);
+    },
+    [matchedCards, flippedCards, mouseDisabled]
+  );
 
-    return () => document.removeEventListener("click", handleFirstClick);
+  // Memoize the handleBackButton function
+  const handleBackButton = useCallback(() => {
+    setOpenModal(true);
   }, []);
 
+  // Memoize the handleModalYes function
+  const handleModalYes = useCallback(() => {
+    setOpenModal(false);
+    localStorage.removeItem("gameCompleted");
+    navigate("/play");
+  }, [navigate]);
+
+  // Memoize the handleModalNo function
+  const handleModalNo = useCallback(() => {
+    setOpenModal(false);
+  }, []);
+
+  // Initialize the game when the component mounts or difficulty changes
+  useEffect(() => {
+    if (difficulty) {
+      handleNewGame();
+    }
+  }, [difficulty, handleNewGame]);
+
+  // Timer effect
   useEffect(() => {
     let interval;
     if (timerActive) {
@@ -385,6 +416,7 @@ const MemoryCardGame = () => {
     return () => clearInterval(interval);
   }, [timerActive]);
 
+  // Card matching effect
   useEffect(() => {
     if (flippedCards.length === 2) {
       const [card1, card2] = flippedCards;
@@ -392,11 +424,10 @@ const MemoryCardGame = () => {
         if (card1.image === card2.image) {
           setMatchedCards((prev) => [...prev, card1.id, card2.id]);
           if (audioIndex < matchAudioFiles.length) {
-            // Play the next audio in order
             const nextAudio = new Audio(matchAudioFiles[audioIndex]);
-            nextAudio.volume = sfxVolume / 100; // Set the volume for sound effects
+            nextAudio.volume = sfxVolume / 100;
             nextAudio.play();
-            setAudioIndex(audioIndex + 1); // Move to the next audio
+            setAudioIndex(audioIndex + 1);
           }
         } else {
           setFailedAttempts((prev) => prev + 1);
@@ -406,38 +437,35 @@ const MemoryCardGame = () => {
     }
   }, [flippedCards, audioIndex, sfxVolume]);
 
+  // Game completion effect
   useEffect(() => {
     if (matchedCards.length === cards.length && cards.length > 0) {
-      console.log("Game completed! Saving results...");
-      // Play the congratulations audio
       const congrats = new Audio(congratsAudio);
       congrats.volume = sfxVolume / 100;
       congrats.play();
 
-      // Stop the timer before saving the game data
       setTimerActive(false);
 
-      // Save game result first
       const score = 100 - failedAttempts;
       const time = timer;
       const moves = matchedCards.length / 2;
 
-      console.log("Calling saveGameResult with:", { score, time, moves });
       saveGameResult(score, time, moves);
 
-      //Then save game data
       const saveData = async () => {
         try {
           await saveGameData({
-            userID,
+            userID: localStorage.getItem("userID"),
             gameDate: new Date(),
             failed: failedAttempts,
-            difficulty: defaultDifficulty,
+            difficulty,
             completed: 1,
             timeTaken: timer,
           });
           localStorage.setItem("gameCompleted", "true");
-          setTimeout(() => navigate("/congratulations"), 1000);
+          setTimeout(() => {
+            navigate("/congratulations");
+          }, 1000);
         } catch (error) {
           console.error("Error saving game data:", error);
         }
@@ -445,23 +473,31 @@ const MemoryCardGame = () => {
 
       saveData();
     }
-  }, [matchedCards, cards.length, navigate, sfxVolume, failedAttempts, timer]);
+  }, [
+    matchedCards,
+    cards.length,
+    navigate,
+    sfxVolume,
+    failedAttempts,
+    timer,
+    difficulty,
+  ]);
 
-  const userID = localStorage.getItem("userID"); // ✅ Fetch from local storage or auth context
-  if (!userID) {
-    console.error("Error: userID is missing.");
-    return;
-  }
-
-  const handleCardClick = (card) => {
-    if (
-      !matchedCards.includes(card.id) &&
-      flippedCards.length < 2 &&
-      !flippedCards.some((c) => c.id === card.id)
-    ) {
-      setFlippedCards((prev) => [...prev, card]);
+  // Get grid configuration based on difficulty
+  const getGridConfig = () => {
+    switch (difficulty) {
+      case "green":
+        return { xs: 6, spacing: 6, maxWidth: 600, marginTop: "-80px" }; // 2x2 grid
+      case "yellow":
+        return { xs: 4, spacing: 10, maxWidth: 700, marginTop: "-50px" }; // 3x2 grid
+      case "red":
+        return { xs: 3, spacing: 8, maxWidth: 700, marginTop: "-120px" }; // 4x3 grid
+      default:
+        return { xs: 6, spacing: 6, maxWidth: 600, marginTop: "-80px" };
     }
   };
+
+  const gridConfig = getGridConfig();
 
   return (
     <StyledGameContainer mouseDisabled={mouseDisabled}>
@@ -476,12 +512,12 @@ const MemoryCardGame = () => {
       <PixelBox>Learning Moments: {failedAttempts}</PixelBox>
       <Grid
         container
-        spacing={8}
+        spacing={gridConfig.spacing}
         justifyContent="center"
-        sx={{ maxWidth: 700, marginTop: "-120px" }}
+        sx={{ maxWidth: gridConfig.maxWidth, marginTop: gridConfig.marginTop }}
       >
         {cards.map((card) => (
-          <Grid item xs={3} key={card.id}>
+          <Grid item xs={gridConfig.xs} key={card.id}>
             <Card
               card={card}
               handleClick={() => handleCardClick(card)}
@@ -498,7 +534,6 @@ const MemoryCardGame = () => {
       <Box sx={{ mt: 2, textAlign: "center" }}>
         <PixelButton
           onClick={() => {
-            handleSaveNewGame();
             handleNewGame();
           }}
           sx={{ mt: 2 }}
@@ -522,7 +557,6 @@ const MemoryCardGame = () => {
           >
             <PixelButtonModal
               onClick={() => {
-                handleSaveNewGame();
                 handleModalYes();
               }}
               variant="contained"
@@ -544,4 +578,4 @@ const MemoryCardGame = () => {
   );
 };
 
-export default MemoryCardGame;
+export default MemoryGame;

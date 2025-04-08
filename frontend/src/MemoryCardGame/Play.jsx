@@ -1,10 +1,11 @@
 import { X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
-import { useNavigate } from "react-router-dom";
 import backgroundMusic from "../assets/audio/background-music.mp3";
 import buttonClickSound from "../assets/audio/button-click.mp3";
 import buttonHoverSound from "../assets/audio/button-hover.mp3";
+import { useDifficulty } from "./DifficultyContext";
+import DifficultyModal from "./DifficultyModal";
 import "./Play.css";
 
 const modalStyles = {
@@ -34,38 +35,9 @@ const modalStyles = {
   },
 };
 
-const modalPlayStyles = {
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
-    zIndex: 999,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-  },
-  content: {
-    backgroundColor: "#1e1e2e",
-    border: "2px solid #4a4e69",
-    borderRadius: "20px",
-    padding: "40px",
-    maxWidth: "600px",
-    height: "200px",
-    width: "90%",
-    color: "#fff",
-    textAlign: "center",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    overflow: "hidden",
-  },
-};
-
-const Play = () => {
-  const navigate = useNavigate();
+const GameContent = () => {
+  const { openModal } = useDifficulty();
   const [SettingsmodalIsOpen, setModalSettingIsOpen] = useState(false);
-  const [PlaymodalIsOpen, setModalPlayIsOpen] = useState(false);
-  const [difficulty, setDifficulty] = useState(null);
   const [isCalmMode] = useState(false);
 
   const [bgVolume, setBgVolume] = useState(
@@ -157,65 +129,8 @@ const Play = () => {
     playClickSound();
   };
 
-  const PlayopenModal = () => {
-    playClickSound();
-    setModalPlayIsOpen(true);
-  };
-
-  const PlaycloseModal = () => {
-    playClickSound();
-    setModalPlayIsOpen(false);
-  };
-
-  const handleDifficultySelect = (level) => {
-    setDifficulty(level);
-  };
-
-  const handlePlay = () => {
-    playClickSound();
-    const userID = localStorage.getItem("userID");
-    if (!userID) {
-      alert("UserID is missing. Please log in again.");
-      return;
-    }
-    localStorage.setItem("gameStarted", "true");
-
-    if (isCalmMode) {
-      if (difficulty === "red") {
-        navigate("/calm-hard");
-      } else if (difficulty === "yellow") {
-        navigate("/calm-medium");
-      } else if (difficulty === "green") {
-        navigate("/calm-easy");
-      } else {
-        alert(`Selected difficulty: ${difficulty}`);
-      }
-    } else {
-      if (difficulty === "red") {
-        navigate("/memory-card-game");
-      } else if (difficulty === "yellow") {
-        navigate("/medium");
-      } else if (difficulty === "green") {
-        navigate("/easy");
-      } else {
-        alert(`Selected difficulty: ${difficulty}`);
-      }
-    }
-  };
-
-  // const goToHistory = () => {
-  //   navigate("/history");
-  // };
-
   return (
-    <div
-      className="background-container"
-      style={
-        {
-          // backgroundImage: `url(${isCalmMode ? calmBackground : backgroundGif})`,
-        }
-      }
-    >
+    <div className="background-container">
       <h1 className={`game-title ${isCalmMode ? "calm-title" : ""}`}>
         WonderCards
       </h1>
@@ -223,7 +138,10 @@ const Play = () => {
       <div className="button-container">
         <button
           className={`game-button ${isCalmMode ? "calm-button" : ""}`}
-          onClick={PlayopenModal}
+          onClick={() => {
+            playClickSound();
+            openModal();
+          }}
           onMouseEnter={playHoverSound}
         >
           Play
@@ -238,13 +156,6 @@ const Play = () => {
         >
           Instructions
         </button>
-        {/* <button
-          className={`game-button ${isCalmMode ? "calm-button" : ""}`}
-          onClick={goToHistory}
-          onMouseEnter={playHoverSound}
-        >
-          Results
-        </button> */}
         <button
           className={`game-button ${isCalmMode ? "calm-button" : ""}`}
           onClick={SettingopenModal}
@@ -325,86 +236,16 @@ const Play = () => {
         </div> */}
       </Modal>
 
-      <Modal
-        isOpen={PlaymodalIsOpen}
-        onRequestClose={PlaycloseModal}
-        style={{
-          ...modalPlayStyles,
-          content: {
-            ...modalPlayStyles.content,
-            backgroundColor: isCalmMode ? "#86a17d" : "#1e1e2e",
-            color: isCalmMode ? "#ffffff" : "#fff",
-          },
-        }}
-      >
-        <button
-          onClick={PlaycloseModal}
-          style={{
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            color: "#fff",
-          }}
-        >
-          <X size={24} />
-        </button>
-
-        <h2 className={`${isCalmMode ? "calm-mode-label" : ""} modal-h2`}>
-          Select Difficulty
-        </h2>
-        <div className="difficulty-selection">
-          <button
-            onClick={() => {
-              handleDifficultySelect("green");
-              playClickSound();
-            }}
-            className={`difficulty-button green ${
-              difficulty === "green" && !isCalmMode ? "selected" : ""
-            } ${isCalmMode && difficulty === "green" ? "calm-selected" : ""}`}
-            onMouseEnter={playHoverSound}
-          >
-            Easy
-          </button>
-          <button
-            onClick={() => {
-              handleDifficultySelect("yellow");
-              playClickSound();
-            }}
-            className={`difficulty-button yellow ${
-              difficulty === "yellow" && !isCalmMode ? "selected" : ""
-            } ${isCalmMode && difficulty === "yellow" ? "calm-selected" : ""}`}
-            onMouseEnter={playHoverSound}
-          >
-            Normal
-          </button>
-          <button
-            onClick={() => {
-              handleDifficultySelect("red");
-              playClickSound();
-            }}
-            className={`difficulty-button red ${
-              difficulty === "red" && !isCalmMode ? "selected" : ""
-            } ${isCalmMode && difficulty === "red" ? "calm-selected" : ""}`}
-            onMouseEnter={playHoverSound}
-          >
-            Hard
-          </button>
-        </div>
-
-        <div>
-          <button
-            onClick={handlePlay}
-            className="play-button"
-            onMouseEnter={playHoverSound}
-          >
-            Accept
-          </button>
-        </div>
-      </Modal>
+      <DifficultyModal />
     </div>
+  );
+};
+
+const Play = () => {
+  return (
+    // <DifficultyProvider>
+    <GameContent />
+    // </DifficultyProvider>
   );
 };
 
