@@ -1,0 +1,91 @@
+/* Import space-inspired fonts */
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap");
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  z-index: 100;
+  background: rgba(30, 30, 46, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid #4a4e69;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logoText {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffcc00;
+  text-shadow: 0 0 10px #ffcc00, 0 0 15px #ffaa00;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profileButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #4a4e69, #22223b);
+  color: white;
+  border: 2px solid #9a8c98;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s, background 0.3s;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.profileButton:hover {
+  background: linear-gradient(90deg, #6c757d, #343a40);
+  box-shadow: 0 0 20px #ffffff, 0 8px 16px rgba(0, 0, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.icon {
+  color: #ffcc00;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 0.75rem 1rem;
+  }
+
+  .logoText {
+    font-size: 1.2rem;
+  }
+
+  .profileButton {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.7rem;
+  }
+
+  .profileButton span {
+    display: none;
+  }
+}

@@ -2,26 +2,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap");
 
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden; /* Prevents scrolling, ensures the background fits perfectly */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Prevents scrolling, ensures the background fits perfectly */
 }
 
 /* Modal styling */
 .ReactModal__Overlay {
-    opacity: 0;
-    transition: opacity 200ms ease-in-out;
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
 }
 
 .ReactModal__Overlay--after-open {
-    opacity: 1;
+  opacity: 1;
 }
 
 .ReactModal__Overlay--before-close {
-    opacity: 0;
+  opacity: 0;
 }
 
 .ReactModal__Content {
@@ -39,61 +40,53 @@ html, body {
   color: #fff; /* Default text color */
 }
 
-
-
 /* Calm Mode button styling */
-
-
 
 /* Volume control */
 .volume-control {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
 }
 
 /* Volume icon size */
 .volume-icon {
-    font-size: 40px; /* Increased icon size */
-    margin-right: 15px; /* More space between icon and slider */
+  font-size: 40px; /* Increased icon size */
+  margin-right: 15px; /* More space between icon and slider */
 }
 
 /* Adjust the volume slider width */
 .volume-slider {
-    width: 250px; /* Increased width */
-    -webkit-appearance: none;
-    appearance: none;
-    height: 10px; /* Increased height */
-    background: linear-gradient(90deg, #85d1e0, #4a4e69);
-    outline: none;
-    border-radius: 5px;
-    transition: background 0.3s;
+  width: 250px; /* Increased width */
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px; /* Increased height */
+  background: linear-gradient(90deg, #85d1e0, #4a4e69);
+  outline: none;
+  border-radius: 5px;
+  transition: background 0.3s;
 }
 
 .volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: #ffffff;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
-
-
 
 /* Volume label styling */
 .modal-h2 {
-  font-family: "Orbitron", sans-serif; 
+  font-family: "Orbitron", sans-serif;
   color: #ffcc00; /* Default color for background music and sound effects */
   text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffaa00; /* Glowing effect */
   margin-bottom: 25px;
   font-size: 24px;
 }
-
-
 
 /* Specific styling for Calm Mode h2 text */
 .calm-mode-label {
@@ -102,147 +95,137 @@ html, body {
   font-size: 24px; /* Keep the font size the same */
 }
 
-
-
-
 /* Background container */
 .background-container {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100vh;
-    background-position: center;
-    background-size: cover;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  /* overflow: hidden; */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* Game title styling */
 .game-title {
-    font-family: "Orbitron", sans-serif; /* Futuristic font for space theme */
-    font-size: 100px; /* Large size */
-    color: #ffcc00; /* Yellow, matching stars */
-    text-shadow: 
-        0 0 10px #ffcc00, /* Outer glow */
-        0 0 20px #ffaa00, /* Brighter inner glow */
-        0 0 30px rgba(255, 255, 255, 0.6); /* Subtle white glow */
-    margin-top: 70px;
-    z-index: 10;
-    animation: pulseTitle 3s infinite; /* Add glowing pulse animation */
+  font-family: "Orbitron", sans-serif; /* Futuristic font for space theme */
+  font-size: 100px; /* Large size */
+  color: #ffcc00; /* Yellow, matching stars */
+  text-shadow: 0 0 10px #ffcc00, /* Outer glow */ 0 0 20px #ffaa00,
+    /* Brighter inner glow */ 0 0 30px rgba(255, 255, 255, 0.6); /* Subtle white glow */
+  margin-top: 120px; /* Increased margin-top to account for header */
+  z-index: 10;
+  animation: pulseTitle 3s infinite; /* Add glowing pulse animation */
 }
 
 /* Title pulse animation */
 @keyframes pulseTitle {
-    0%, 100% {
-        text-shadow: 
-            0 0 10px #ffcc00,
-            0 0 20px #ffaa00,
-            0 0 30px rgba(255, 255, 255, 0.6);
-        transform: scale(1);
-    }
-    50% {
-        text-shadow: 
-            0 0 20px #ffaa00,
-            0 0 40px #ffcc00,
-            0 0 60px rgba(255, 255, 255, 0.9);
-        transform: scale(1.05); /* Slight size increase for pulse effect */
-    }
+  0%,
+  100% {
+    text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffaa00,
+      0 0 30px rgba(255, 255, 255, 0.6);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 20px #ffaa00, 0 0 40px #ffcc00,
+      0 0 60px rgba(255, 255, 255, 0.9);
+    transform: scale(1.05); /* Slight size increase for pulse effect */
+  }
 }
 
 /* Button container */
 .button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 50px;
-    z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  z-index: 10;
 }
 
 /* Game button styling */
 .game-button {
-    width: 300px; /* Button size */
-    height: 70px;
-    margin: 15px;
-    font-family: "Press Start 2P", sans-serif; /* Retro font */
-    font-size: 16px; /* Font size */
-    color: #ffffff; /* White text */
-    background: linear-gradient(90deg, #4a4e69, #22223b); /* Cosmic gradient */
-    border: 2px solid #9a8c98; /* Metallic border */
-    border-radius: 10px; /* Smooth edges */
-    box-shadow: 
-        0 0 10px rgba(255, 255, 255, 0.3), /* Outer glow */
-        0 6px 12px rgba(0, 0, 0, 0.5); /* Shadow for depth */
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.3s, background 0.3s;
+  width: 300px; /* Button size */
+  height: 70px;
+  margin: 15px;
+  font-family: "Press Start 2P", sans-serif; /* Retro font */
+  font-size: 16px; /* Font size */
+  color: #ffffff; /* White text */
+  background: linear-gradient(90deg, #4a4e69, #22223b); /* Cosmic gradient */
+  border: 2px solid #9a8c98; /* Metallic border */
+  border-radius: 10px; /* Smooth edges */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3),
+    /* Outer glow */ 0 6px 12px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s, background 0.3s;
 }
 
 .game-button:hover {
-    background: linear-gradient(90deg, #6c757d, #343a40); /* Hover gradient */
-    box-shadow: 
-        0 0 20px #ffffff, /* Brighter glow */
-        0 8px 16px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
-    transform: scale(1.1); 
-   
+  background: linear-gradient(90deg, #6c757d, #343a40); /* Hover gradient */
+  box-shadow: 0 0 20px #ffffff,
+    /* Brighter glow */ 0 8px 16px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
+  transform: scale(1.1);
 }
 
 /* Calm Mode toggle styling */
 .calm-mode {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2px; /* Increased space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px; /* Increased space */
 }
 
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px; /* Slightly larger width */
-    height: 30px; /* Larger height */
-    margin-left: 15px; /* Increased margin */
+  position: relative;
+  display: inline-block;
+  width: 60px; /* Slightly larger width */
+  height: 30px; /* Larger height */
+  margin-left: 15px; /* Increased margin */
 }
 
 .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: 0.4s;
-    border-radius: 30px; /* Increased border-radius for a smoother look */
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 30px; /* Increased border-radius for a smoother look */
 }
 
 .slider:before {
-    position: absolute;
-    content: "";
-    height: 22px; /* Increased size of the circle */
-    width: 22px; /* Increased size of the circle */
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: 0.4s;
-    border-radius: 50%;
+  position: absolute;
+  content: "";
+  height: 22px; /* Increased size of the circle */
+  width: 22px; /* Increased size of the circle */
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
 }
 
 input:checked + .slider {
-    background-color: #4caf50;
+  background-color: #4caf50;
 }
 
 input:checked + .slider:before {
-    transform: translateX(30px); /* Adjusted the movement to match the increased width */
+  transform: translateX(
+    30px
+  ); /* Adjusted the movement to match the increased width */
 }
-
 
 /* Calm Mode button styling */
 .game-button.calm-button {
@@ -253,7 +236,11 @@ input:checked + .slider:before {
 
 /* Calm Mode button hover effect */
 .game-button.calm-button:hover {
-  background: linear-gradient(90deg, #a0b79d, #8ba982); /* Light calm hover effect */
+  background: linear-gradient(
+    90deg,
+    #a0b79d,
+    #8ba982
+  ); /* Light calm hover effect */
   box-shadow: 0 0 20px #ffffff, 0 8px 16px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
   transform: scale(1.1); /* Slight zoom effect */
 }
@@ -263,101 +250,91 @@ input:checked + .slider:before {
   font-family: "Orbitron", sans-serif; /* Keep the futuristic font */
   font-size: 100px; /* Large size */
   color: #a6e0a6; /* Light greenish color, fitting the calm theme */
-  text-shadow: 
-      0 0 10px #a6e0a6; /* Soft greenish glow */
- /* More soft glow */
-    
+  text-shadow: 0 0 10px #a6e0a6; /* Soft greenish glow */
+  /* More soft glow */
+
   margin-top: 70px;
   z-index: 10;
   animation: none; /* Remove the pulse animation */
 }
 
-
 .difficulty-selection {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
 }
-  .difficulty-button {
-    padding: 10px 20px;
-    font-family: "Press Start 2P", sans-serif;
-    font-size: 30px;
-    color: #fff;
-    background: linear-gradient(90deg, #22223b, #4a4e69);
-    border: 2px solid #9a8c98;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
-  }
-  
-  .difficulty-button:hover {
-    background: linear-gradient(90deg, #6c757d, #343a40);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 8px 16px rgba(0, 0, 0, 0.6);
-    transform: scale(1.1);
-  
-  }
-
-  .difficulty-button.selected {
-    border-color: #fff; /* White border */
-    transform: scale(1.1); /* Slightly enlarge */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Glow effect */
-    animation: dificultyfloating 2s infinite;
-  }
-
-  
-  .difficulty-button.green {
-    background: linear-gradient(90deg, #85e085, #4caf50);
-  }
-  
-  .difficulty-button.yellow {
-    background: linear-gradient(90deg, #ffeb3b, #fbc02d);
-  }
-  
-  .difficulty-button.red {
-    background: linear-gradient(90deg, #ff4444, #e53935);
-  }
-
-  .difficulty-button.calm-selected {
-    border-color: #fff; /* White border */
-    transform: scale(1.1); /* Slightly enlarge */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Glow effect */
-  
-  }
-
-
-  @keyframes dificultyfloating {
-    0%, 100% {
-        text-shadow: 
-            0 0 10px #ffffff,
-            0 0 20px #bababa,
-            0 0 30px rgba(255, 255, 255, 0.6);
-        transform: scale(1);
-    }
-    50% {
-        text-shadow: 
-            0 0 20px #000000,
-            0 0 40px #000000,
-            0 0 60px rgba(0, 0, 0, 0.9);
-        transform: scale(1.05); /* Slight size increase for pulse effect */
-    }
+.difficulty-button {
+  padding: 10px 20px;
+  font-family: "Press Start 2P", sans-serif;
+  font-size: 30px;
+  color: #fff;
+  background: linear-gradient(90deg, #22223b, #4a4e69);
+  border: 2px solid #9a8c98;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
 }
-  
-  .play-button {
-    margin-top: 50px;
-    padding: 10px 20px;
-    background: #4a4e69;
-    color: #fff;
-    font-family: "Press Start 2P", sans-serif;
-    font-size: 18px;
-    border: 2px solid #9a8c98;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+
+.difficulty-button:hover {
+  background: linear-gradient(90deg, #6c757d, #343a40);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 8px 16px rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+}
+
+.difficulty-button.selected {
+  border-color: #fff; /* White border */
+  transform: scale(1.1); /* Slightly enlarge */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Glow effect */
+  animation: dificultyfloating 2s infinite;
+}
+
+.difficulty-button.green {
+  background: linear-gradient(90deg, #85e085, #4caf50);
+}
+
+.difficulty-button.yellow {
+  background: linear-gradient(90deg, #ffeb3b, #fbc02d);
+}
+
+.difficulty-button.red {
+  background: linear-gradient(90deg, #ff4444, #e53935);
+}
+
+.difficulty-button.calm-selected {
+  border-color: #fff; /* White border */
+  transform: scale(1.1); /* Slightly enlarge */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Glow effect */
+}
+
+@keyframes dificultyfloating {
+  0%,
+  100% {
+    text-shadow: 0 0 10px #ffffff, 0 0 20px #bababa,
+      0 0 30px rgba(255, 255, 255, 0.6);
+    transform: scale(1);
   }
-  
-  .play-button:hover {
-    background: #6c757d;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 8px 16px rgba(0, 0, 0, 0.6);
-    transform: scale(1.1);
+  50% {
+    text-shadow: 0 0 20px #000000, 0 0 40px #000000, 0 0 60px rgba(0, 0, 0, 0.9);
+    transform: scale(1.05); /* Slight size increase for pulse effect */
   }
+}
+
+.play-button {
+  margin-top: 50px;
+  padding: 10px 20px;
+  background: #4a4e69;
+  color: #fff;
+  font-family: "Press Start 2P", sans-serif;
+  font-size: 18px;
+  border: 2px solid #9a8c98;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+}
+
+.play-button:hover {
+  background: #6c757d;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 8px 16px rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+}

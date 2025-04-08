@@ -2,7 +2,7 @@ import axios from "axios";
 import { ArrowLeft, Lock, User, UserPlus } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import backgroundGif from "../assets/images/play.gif";
+import Header from "../components/Header";
 import styles from "./Register.module.css";
 
 const Register = () => {
@@ -30,8 +30,9 @@ const Register = () => {
   return (
     <div
       className={styles.pageBackground}
-      style={{ backgroundImage: `url(${backgroundGif})` }}
+      // style={{ backgroundImage: `url(${backgroundGif})` }}
     >
+      <Header />
       <div className={styles.container}>
         <form onSubmit={handleSubmit}>
           <div className={styles.titleContainer}>

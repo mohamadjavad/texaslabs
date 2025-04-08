@@ -1,0 +1,155 @@
+/* Import space-inspired fonts */
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap");
+
+.walletContainer {
+  position: relative;
+  z-index: 100;
+}
+
+.walletButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #4a4e69, #22223b);
+  color: white;
+  border: 2px solid #9a8c98;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s, background 0.3s;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.walletButton:hover {
+  background: linear-gradient(90deg, #6c757d, #343a40);
+  box-shadow: 0 0 20px #ffffff, 0 8px 16px rgba(0, 0, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.walletButton.connected {
+  background: linear-gradient(90deg, #22577a, #38a3a5);
+  border-color: #00d9ff;
+}
+
+.walletButton.connected:hover {
+  background: linear-gradient(90deg, #38a3a5, #57cc99);
+}
+
+.walletIcon {
+  color: #ffcc00;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: rgba(30, 30, 46, 0.98);
+  border: 2px solid #4a4e69;
+  border-radius: 12px;
+  min-width: 250px;
+  padding: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 217, 255, 0.1);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.addressBox {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #4a4e69;
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.addressLabel {
+  color: #9a8c98;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.7rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.address {
+  color: #00d9ff;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.8rem;
+  margin: 0;
+  word-break: break-all;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+
+.connectButton,
+.disconnectButton {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid;
+}
+
+.connectButton {
+  background: linear-gradient(90deg, #4a4e69, #22223b);
+  color: white;
+  border-color: #ffcc00;
+}
+
+.connectButton:hover {
+  background: linear-gradient(90deg, #6c757d, #343a40);
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.disconnectButton {
+  background: linear-gradient(90deg, #7d1a0c, #a31621);
+  color: white;
+  border-color: #ff6b6b;
+}
+
+.disconnectButton:hover {
+  background: linear-gradient(90deg, #a31621, #c71f37);
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+  transform: translateY(-2px);
+}
+
+.connectButton.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: #4a4e69;
+}
+
+.error {
+  color: #ff6b6b;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.6rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+  .dropdown {
+    width: calc(100vw - 3rem);
+    right: -1rem;
+  }
+}

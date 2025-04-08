@@ -1,8 +1,8 @@
 import axios from "axios";
 import { Lock, LogIn, User, UserPlus } from "lucide-react";
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import backgroundGif from "../assets/images/play.gif";
 import styles from "./Login.module.css";
 
 const Login = ({ onLogin }) => {
@@ -37,7 +37,7 @@ const Login = ({ onLogin }) => {
   return (
     <div
       className={styles.pageBackground}
-      style={{ backgroundImage: `url(${backgroundGif})` }}
+      // style={{ backgroundImage: `url(${backgroundGif})` }}
     >
       <div className={styles.container}>
         <form onSubmit={handleSubmit}>
@@ -91,6 +91,10 @@ const Login = ({ onLogin }) => {
       </div>
     </div>
   );
+};
+
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired,
 };
 
 export default Login;

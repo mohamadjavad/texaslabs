@@ -12,12 +12,13 @@
   align-items: center;
   padding: 2rem;
   box-sizing: border-box;
+  position: relative;
 }
 
 .container {
   max-width: 800px;
   max-height: 85vh;
-  margin: 2rem auto;
+  margin: 4rem auto 2rem;
   padding: 2rem;
   background: rgba(30, 30, 46, 0.95);
   border-radius: 20px;

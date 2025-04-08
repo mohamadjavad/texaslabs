@@ -2,7 +2,6 @@ import axios from "axios";
 import { ArrowLeft, Clock, MoveRight, Trophy } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import backgroundGif from "../assets/images/play.gif";
 import styles from "./GameHistory.module.css";
 
 const GameHistory = () => {
@@ -49,7 +48,7 @@ const GameHistory = () => {
     return (
       <div
         className={styles.pageBackground}
-        style={{ backgroundImage: `url(${backgroundGif})` }}
+        // style={{ backgroundImage: `url(${backgroundGif})` }}
       >
         <div className={styles.container}>
           <div className={styles.loading}>Loading game history...</div>
@@ -62,7 +61,7 @@ const GameHistory = () => {
     return (
       <div
         className={styles.pageBackground}
-        style={{ backgroundImage: `url(${backgroundGif})` }}
+        // style={{ backgroundImage: `url(${backgroundGif})` }}
       >
         <div className={styles.container}>
           <div className={styles.error}>{error}</div>
@@ -77,7 +76,7 @@ const GameHistory = () => {
   return (
     <div
       className={styles.pageBackground}
-      style={{ backgroundImage: `url(${backgroundGif})` }}
+      //   style={{ backgroundImage: `url(${backgroundGif})` }}
     >
       <div className={styles.container}>
         <div className={styles.header}>

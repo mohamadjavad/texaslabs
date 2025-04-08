@@ -16,6 +16,7 @@ import MemoryCardGame from "./MemoryCardGame/MemoryCardGame";
 import Easy from "./MemoryCardGame/MemoryEasy";
 import Medium from "./MemoryCardGame/MemoryMedium";
 import Play from "./MemoryCardGame/Play";
+import Header from "./components/Header";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -33,6 +34,7 @@ const App = () => {
 
   return (
     <Router>
+      <Header />
       <Routes>
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register />} />

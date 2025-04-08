@@ -1,12 +1,10 @@
 import { X } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import backgroundMusic from "../assets/audio/background-music.mp3";
 import buttonClickSound from "../assets/audio/button-click.mp3";
 import buttonHoverSound from "../assets/audio/button-hover.mp3";
-import calmBackground from "../assets/images/calm-wallpaper.jpg";
-import backgroundGif from "../assets/images/play.gif";
 import "./Play.css";
 
 const modalStyles = {
@@ -68,7 +66,7 @@ const Play = () => {
   const [SettingsmodalIsOpen, setModalSettingIsOpen] = useState(false);
   const [PlaymodalIsOpen, setModalPlayIsOpen] = useState(false);
   const [difficulty, setDifficulty] = useState(null);
-  const [isCalmMode, setIsCalmMode] = useState(false);
+  const [isCalmMode] = useState(false);
 
   const [bgVolume, setBgVolume] = useState(
     localStorage.getItem("bgVolume") !== null
@@ -133,11 +131,6 @@ const Play = () => {
     const newVolume = parseInt(event.target.value, 10);
     setSfxVolume(newVolume);
     setMutedSfx(newVolume === 0);
-  };
-
-  const toggleCalmMode = () => {
-    setIsCalmMode((prev) => !prev);
-    playClickSound();
   };
 
   const playHoverSound = () => {
@@ -210,16 +203,18 @@ const Play = () => {
     }
   };
 
-  const goToHistory = () => {
-    navigate("/history");
-  };
+  // const goToHistory = () => {
+  //   navigate("/history");
+  // };
 
   return (
     <div
       className="background-container"
-      style={{
-        backgroundImage: `url(${isCalmMode ? calmBackground : backgroundGif})`,
-      }}
+      style={
+        {
+          // backgroundImage: `url(${isCalmMode ? calmBackground : backgroundGif})`,
+        }
+      }
     >
       <h1 className={`game-title ${isCalmMode ? "calm-title" : ""}`}>
         WonderCards
@@ -243,13 +238,13 @@ const Play = () => {
         >
           Instructions
         </button>
-        <button
+        {/* <button
           className={`game-button ${isCalmMode ? "calm-button" : ""}`}
           onClick={goToHistory}
           onMouseEnter={playHoverSound}
         >
           Results
-        </button>
+        </button> */}
         <button
           className={`game-button ${isCalmMode ? "calm-button" : ""}`}
           onClick={SettingopenModal}
