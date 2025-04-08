@@ -531,7 +531,12 @@ const MemoryGame = () => {
           </Grid>
         ))}
       </Grid>
-      <Box sx={{ mt: 2, textAlign: "center" }}>
+      <Box
+        sx={{
+          mt: 2,
+          textAlign: "center",
+        }}
+      >
         <PixelButton
           onClick={() => {
             handleNewGame();

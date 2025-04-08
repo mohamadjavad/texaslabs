@@ -1,11 +1,10 @@
 import { Box } from "@mui/material";
 import { styled } from "@mui/system";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bgMusic from "../assets/audio/celebrate.mp3";
 import background from "../assets/images/celebration.gif";
 import congratulationImage from "../assets/images/congrats2.png";
-import { useDifficulty } from "./DifficultyContext";
 
 // Styled Components
 const PixelBox = styled(Box)(({ theme }) => ({
@@ -68,7 +67,7 @@ const PixelButton = styled(Box)(({ theme }) => ({
 
 const Congratulations = () => {
   const navigate = useNavigate();
-  const { difficulty } = useDifficulty();
+
   const audioRef = useRef(null);
   const [bgVolume, setBgVolume] = useState(
     parseInt(localStorage.getItem("bgVolume"), 10) || 0
